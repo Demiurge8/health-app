@@ -1,0 +1,22 @@
+.custom-tooltip {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .highlighted {
+    background-color: #ffffff;
+  }
+
+  .add-button {
+    margin-left: 20px;
+    background-color: #4ebef6;
+  }
+
+  .histogram {
+    margin-top: 20px;
+  }
+  
+  .histogram.recharts-bar-rectangle {
+    fill: #8884d8;
+  }

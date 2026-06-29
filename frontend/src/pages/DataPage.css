@@ -1,0 +1,19 @@
+.custom-tooltip {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .highlighted {
+    background-color: #ffffff;
+  }
+
+  .add-button {
+    margin-right: 10px;
+    background-color: #4ebef6;
+  }
+
+  .table-but {
+    width: 70px;
+    margin-top: 3px;
+  }

@@ -1,0 +1,141 @@
+.app {
+  transition: background-color 0.3s ease;
+}
+
+.light-bg {
+  background-color: #41e1fe;
+}
+
+.dark-bg {
+  background-color: #3d3737;
+}
+
+.background-toggle {
+  bottom: 20px;
+  right: 20px;
+  align-items: center;
+  font-size: 16px;
+  color: #050505;
+}
+
+.toggle-switch {
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.menu-frame {
+  background-color: #f1f2f6;
+  padding: 10px;
+  margin: 20px;
+  transition: background-color 0.3s ease;
+  position: sticky;
+  top: 0;
+  height: 320px;
+  border-radius: 30px;
+  text-align: center;
+}
+
+.menu-frame ul {
+  list-style-type: none;
+}
+
+.menu-header {
+  text-align: center;
+}
+
+.menu-frame ul li {
+  margin-top: 10px;
+  padding-right: 40px;
+}
+
+.menu-frame ul li button {
+  font-size: 16px;
+  text-decoration: none;
+  background-color: #e2e3e6;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  width: 150px;
+  height: 45px;
+}
+
+.menu-frame ul li button:hover {
+  background-color: #a2a2a2;
+  border-bottom: 3px solid black;
+}
+
+.menu-frame nav li.active button {
+  border-bottom: 3px solid black;
+}
+
+.content-frame {
+  flex: 1;
+  background-color: #f1f2f6;
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 30px 0px 0px 30px;
+  margin: 20px;
+  width: 100%;
+}
+
+.user-panel {
+  border: 2px solid;
+  border-radius: 10px;
+  width: 280px;
+  text-align: left;
+  margin-left: 75%;
+  display: flex;
+}
+
+.user-panel-mes {
+  padding: 20px;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  height: 58px;
+  border-radius: 0px 5px 5px 0px;
+  border-left: 1px solid;
+}
+
+.user-panel-mes:hover {
+  background-color: #eae7e7;
+}
+
+.content-h1 {
+  text-align: right;
+}
+
+.content-button {
+  background-color: #2c3e50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  float: right
+}
+
+.content-frame.expanded {
+  margin-left: 60px;
+}
+
+.content-frame::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content-frame::-webkit-scrollbar-track {
+  background-color: #f1f2f6;
+}
+
+.content-frame::-webkit-scrollbar-thumb {
+  background-color: #34495e;
+  border-radius: 4px;
+}
