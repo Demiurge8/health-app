@@ -1,30 +1,29 @@
-
 import React, { useState } from 'react';
-import axios from 'axios';
-import './Contact.css'; // Import the CSS file for styling
+import api from '../services/api';
+import './Contact.css';
 
 const Contact = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [statusMessage, setStatusMessage] = useState('');
+  const [hasError, setHasError] = useState(false);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const data = { name, email, message };
+    try {
+      await api.post('/contact', { name, email, message });
 
-    axios
-      .post('http://localhost:4000/add', data)
-      .then((response) => {
-        // Handle success response (optional)
-        console.log(response.data);
-        alert('Data added successfully.');
-      })
-      .catch((error) => {
-        // Handle error response (optional)
-        console.error(error);
-        alert('Failed to add data to MongoDB.');
-      });
+      setName('');
+      setEmail('');
+      setMessage('');
+      setHasError(false);
+      setStatusMessage('Data added successfully.');
+    } catch (error) {
+      setHasError(true);
+      setStatusMessage('Failed to add data to MongoDB.');
+    }
   };
 
   return (
@@ -33,17 +32,18 @@ const Contact = () => {
         <h1>Contact Us</h1>
         <form onSubmit={handleFormSubmit}>
           <div className="form-group">
-            <input type="text" id="name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="text" id="name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
           <div className="form-group">
-            <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="form-group">
-            <textarea id="message" placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} />
+            <textarea id="message" placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} required />
           </div>
           <button type="submit" className="submit-button">
             Submit
           </button>
+          {statusMessage && <p className={hasError ? 'error-p' : undefined}>{statusMessage}</p>}
         </form>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import './Login.css';
 
 const Login = ({ onLogin, onRegistrationPage }) => {
@@ -11,30 +11,24 @@ const Login = ({ onLogin, onRegistrationPage }) => {
     onRegistrationPage();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const config = {
-      method: "post",
-      url: "http://localhost:4000/login",
-      data: {
-        email,
-        password,
-      },
-    };
-  
-    axios(config)
-      .then((result) => {
-        setError('');
-        onLogin(result.data.email);
-      })
-      .catch((error) => {
-        setError('Invalid username or password');
-  
-        setTimeout(() => {
-          setError('');
-        }, 3000);
+
+    try {
+      const result = await api.post('/login', { email, password });
+
+      setError('');
+      onLogin({
+        email: result.data.email,
+        token: result.data.token,
       });
+    } catch (error) {
+      setError('Invalid username or password');
+
+      setTimeout(() => {
+        setError('');
+      }, 3000);
+    }
   };
 
   return (
@@ -58,13 +52,12 @@ const Login = ({ onLogin, onRegistrationPage }) => {
             type="submit"
             variant="primary"
             className='login-frame-button'
-            onClick={handleSubmit}
           >
             Login
           </button>
             <div className='login-reg'>
               <p>Don't have an account? Register here:</p>
-              <button className='reg-button' onClick={handleRegistrationPage}>Register</button>
+              <button className='reg-button' type="button" onClick={handleRegistrationPage}>Register</button>
             </div>
             {error && <p className='error-p'>{error}</p>}
         </form>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, Label } from 'recharts';
+import api from '../services/api';
 import './Home.css';
 
 function CustomTooltip({ active, payload }) {
@@ -33,25 +33,27 @@ function Histogram({ data }) {
 
 function Home() {
   const [heartRateData, setHeartRateData] = useState([]);
+  const [loadError, setLoadError] = useState('');
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
-    axios
-      .post('http://localhost:4000/heart-rate-data-get')
+    api
+      .get('/heart-rate-data')
       .then((response) => {
-        console.log(response.data);
-        setHeartRateData(response.data.reverse());
+        setLoadError('');
+        setHeartRateData(response.data);
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
+        setLoadError('Failed to load heart rate data.');
       });
   };
   
   return (
     <div className="main-page">
+      {loadError && <p>{loadError}</p>}
       <Histogram data={heartRateData} />
       <ResponsiveContainer width="100%" height={550} className="highlighted">
         <LineChart data={heartRateData} className="graph">

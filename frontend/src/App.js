@@ -9,6 +9,7 @@ import Register from './pages/Registration';
 import UserDropdown from './components/UserDropdown';
 import UserForm from './components/UserForm';
 import DataPage from './pages/DataPage';
+import { clearAuth, getStoredUser, saveAuth } from './services/api';
 import './App.css';
 
 const ToggleSwitch = ({ isOn, handleToggle }) => {
@@ -20,17 +21,20 @@ const ToggleSwitch = ({ isOn, handleToggle }) => {
 };
 
 const App = () => {
-  const [activePage, setActivePage] = useState('login');
-  const [authenticatedUser, setAuthenticatedUser] = useState(null);
+  const [activePage, setActivePage] = useState(() => (getStoredUser() ? 'home' : 'login'));
+  const [authenticatedUser, setAuthenticatedUser] = useState(() => getStoredUser());
   const [isBackgroundBlack, setBackgroundBlack] = useState(false);
 
   const handleLogin = (user) => {
-    setAuthenticatedUser(user);
+    saveAuth(user);
+    setAuthenticatedUser({ email: user.email });
     setActivePage('home');
   };
   
   const handleLogout = () => {
+    clearAuth();
     setAuthenticatedUser(null);
+    setActivePage('login');
   };
 
   const handlePageChange = (page) => {
@@ -90,7 +94,7 @@ const App = () => {
               </div>
               <div className='user-panel'>
                 <div>
-                  <UserDropdown name={authenticatedUser.name} onLogout={handleLogout} />
+                  <UserDropdown name={authenticatedUser.email} onLogout={handleLogout} />
                 </div>
                 <div>
                   <UserForm />

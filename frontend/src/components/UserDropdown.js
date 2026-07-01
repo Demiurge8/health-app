@@ -4,8 +4,7 @@ import './UserDropdown.css';
 
 const UserDropdown = ({ name, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log('name:', name);
+  const displayName = name || 'User';
   
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -19,12 +18,12 @@ const UserDropdown = ({ name, onLogout }) => {
   return (
     <div className="user-dropdown">
       <button className="user-button" onClick={handleToggleDropdown}>
-        Alex
+        {displayName}
       </button>
       {isOpen && (
         <div className="user-menu">
           <img src={CreatorImage} alt="Creator" className="creator-image" />
-          <h1>{name}</h1>
+          <h1>{displayName}</h1>
           <button onClick={handleLogout}>
             <i className="fas fa-sign-out-alt"></i>
             Logout

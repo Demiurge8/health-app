@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import './Registration.css';
 
 const Register = ({ onRegister }) => {
@@ -7,31 +7,25 @@ const Register = ({ onRegister }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const config = {
-    method: "post",
-    url: "http://localhost:4000/register",
-    data: {
-      email,
-      password
-    },
-  };
-
   const handleBack = () => {
     onRegister();
   };
 
-  const handleRegister = (e) => {
-    axios(config)
-    .then((result) => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    try {
+      await api.post('/register', { email, password });
+
       setError('');
-    })
-    .catch((error) => {
+      onRegister();
+    } catch (error) {
       setError('Invalid username or password');
 
       setTimeout(() => {
         setError('');
       }, 3000);
-    })
+    }
   };
 
   return (
@@ -56,7 +50,7 @@ const Register = ({ onRegister }) => {
         </form>
         <p className="label-back">
           Already have an account?{' '}
-          <button className="log-button" onClick={handleBack}>
+          <button className="log-button" type="button" onClick={handleBack}>
             Back to Login
           </button>
         </p>
